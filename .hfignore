@@ -4,11 +4,10 @@
 tests/
 scripts/
 docs/
-dashboard/
 npm/
 plugins/
 skills/
-assets/
+/assets/
 .goreleaser.yml
 .markdownlint.json
 .pre-commit-config.yaml
@@ -24,3 +23,10 @@ dev
 docker-compose.yml
 docker-entrypoint-release.sh
 install.sh
+node_modules/
+.gocache/
+.gomodcache/
+tmp/
+dist/
+dashboard/node_modules/
+dashboard/dist/
