@@ -33,7 +33,7 @@ fi
 if [ -z "${PINCHTAB_CONFIG:-}" ] && [ -f "$default_config_path" ]; then
   current_flags="$(/usr/local/bin/pinchtab config get browser.extraFlags 2>/dev/null || true)"
   if [ -z "$current_flags" ]; then
-    /usr/local/bin/pinchtab config set browser.extraFlags "--no-sandbox --disable-gpu" >/dev/null
+    /usr/local/bin/pinchtab config set browser.extraFlags -- "--no-sandbox --disable-gpu" >/dev/null
   fi
 fi
 
