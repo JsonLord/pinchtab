@@ -61,10 +61,10 @@ WORKDIR /data
 ENV HOME=/data \
     XDG_CONFIG_HOME=/data/.config
 
-EXPOSE 9867
+EXPOSE 7860
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-  CMD wget -q -O /dev/null http://localhost:9867/health || exit 1
+  CMD wget -q -O /dev/null http://localhost:7860/health || exit 1
 
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 CMD ["/usr/local/bin/docker-entrypoint.sh", "pinchtab"]
