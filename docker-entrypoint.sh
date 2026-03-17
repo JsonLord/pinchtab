@@ -18,6 +18,8 @@ if [ -z "${PINCHTAB_CONFIG:-}" ] && [ ! -f "$default_config_path" ]; then
   /usr/local/bin/pinchtab config set server.port "7860" >/dev/null
   if [ -n "${PINCHTAB_TOKEN:-}" ]; then
     /usr/local/bin/pinchtab config set server.token "$PINCHTAB_TOKEN" >/dev/null
+  elif [ -n "${BEARER_TOKEN:-}" ]; then
+    /usr/local/bin/pinchtab config set server.token "$BEARER_TOKEN" >/dev/null
   fi
 fi
 

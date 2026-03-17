@@ -8,6 +8,7 @@ import (
 	"io/fs"
 	"net/http"
 	"os"
+	"strings"
 	"sync"
 	"time"
 
@@ -237,7 +238,15 @@ func (d *Dashboard) handleDashboardUI(w http.ResponseWriter, r *http.Request) {
 		_, _ = w.Write([]byte(fallbackHTML))
 		return
 	}
-	_, _ = w.Write(data)
+
+	htmlStr := string(data)
+	token := os.Getenv("PINCHTAB_TOKEN")
+	if token == "" {
+		token = os.Getenv("BEARER_TOKEN")
+	}
+	htmlStr = strings.ReplaceAll(htmlStr, "{{PINCHTAB_TOKEN_INJECT}}", token)
+
+	_, _ = w.Write([]byte(htmlStr))
 }
 
 func (d *Dashboard) withNoCache(next http.Handler) http.Handler {

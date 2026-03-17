@@ -34,15 +34,29 @@ function AppContent() {
   const navigate = useNavigate();
   const memoryMetricsEnabled = settings.monitoring?.memoryMetrics ?? false;
   // Auto-login from ?token= query parameter (e.g. from wizard URL)
+  // or injected meta tag for Hugging Face Spaces integration
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const urlToken = params.get("token");
+    let urlToken = params.get("token");
+    if (!urlToken) {
+      const meta = document.querySelector("meta[name='pinchtab-token']");
+      const metaContent = meta?.getAttribute("content") || "";
+      // Exclude the unreplaced template literal from injection
+      if (metaContent && metaContent !== "{{PINCHTAB_TOKEN_INJECT}}") {
+        urlToken = metaContent;
+      }
+    }
+
     if (urlToken) {
       setStoredAuthToken(urlToken);
       const clean = new URL(window.location.href);
       clean.searchParams.delete("token");
       window.history.replaceState({}, "", clean.pathname + clean.hash);
-      window.location.reload();
+      // Let the main login flow handle reload if necessary, but actually
+      // if we just updated localStorage we want to reload so state is updated
+      if (getStoredAuthToken() !== urlToken) {
+        window.location.reload();
+      }
     }
   }, []);
 
