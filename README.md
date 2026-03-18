@@ -1,3 +1,8 @@
+---
+title: PinchTab
+sdk: docker
+app_port: 7860
+---
 <p align="center">
   <img src="assets/pinchtab-headless.png" alt="PinchTab" width="200"/>
 </p>
